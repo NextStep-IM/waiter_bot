@@ -14,3 +14,8 @@ def recommend(user_data: dict) -> pd.DataFrame:
     indices = PIPELINE.transform(df_user_data)[0] # Find similar recipes
     return DATASET.iloc[indices]
 
+def main():
+    pass
+
+if __name__ == '__main__':
+    main()
