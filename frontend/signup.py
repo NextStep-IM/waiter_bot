@@ -7,3 +7,7 @@ username_field = st.text_input('Enter username:', placeholder='hitchhiker42')
 password_field = st.text_input('Enter password:', type='password')
 signup_btn = st.button('Sign Up')
 
+# Login
+st.text('\n')
+st.markdown(':small[Already have an account?]')
+login_btn = st.button('Login')
