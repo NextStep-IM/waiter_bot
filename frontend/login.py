@@ -11,3 +11,6 @@ password_field = st.text_input('Enter password: ', type='password', max_chars=20
 st.text('\n')
 st.markdown(':small[Don\'t have an account?]')
 signup_btn = st.button('Sign Up')
+
+if signup_btn:
+    st.switch_page('signup.py')
