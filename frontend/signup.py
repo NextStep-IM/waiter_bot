@@ -11,3 +11,6 @@ signup_btn = st.button('Sign Up')
 st.text('\n')
 st.markdown(':small[Already have an account?]')
 login_btn = st.button('Login')
+if login_btn:
+    st.switch_page('login.py')
+
