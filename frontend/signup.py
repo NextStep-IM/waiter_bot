@@ -14,3 +14,9 @@ login_btn = st.button('Login')
 if login_btn:
     st.switch_page('login.py')
 
+if signup_btn:
+    if not username_field and not password_field:
+        st.error('Please fill all the fields.', icon=':material/error:')
+    else:
+        # Add database things here
+        pass
