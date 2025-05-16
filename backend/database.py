@@ -36,3 +36,18 @@ class DBConnection:
                 self.conn.rollback()
                 raise e
 
+    def read_query(self, query: str):
+        """
+        Runs DQL sql query
+
+        :param query:
+        :return:
+        """
+        with self.conn.cursor(prepared=True) as cur:
+            try:
+                cur.execute(query)
+                return cur.fetchall()
+            except Exception as e:
+                print(e.args)
+                raise e
+
