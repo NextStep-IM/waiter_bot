@@ -19,7 +19,7 @@ class DBConnection:
 
     def execute_query(self, query: str, data: tuple):
         """
-        Runs a sql query
+        Runs DDL or DML sql query
 
         :param query: The sql query
         :param data: The values to replace the question marks (?) in the query
