@@ -31,7 +31,6 @@ class DBConnection:
                 cur.execute(query, data=data)
                 self.conn.commit()
             except Exception as e:
-                # TODO: Try to throw the exception outside
                 print(e.args)
                 self.conn.rollback()
                 raise e
