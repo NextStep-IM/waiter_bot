@@ -35,7 +35,7 @@ class DBConnection:
                 self.conn.rollback()
                 raise e
 
-    def read_query(self, query: str):
+    def read_query(self, query: str, data: tuple=()):
         """
         Runs DQL sql query
 
@@ -44,8 +44,11 @@ class DBConnection:
         """
         with self.conn.cursor(prepared=True) as cur:
             try:
-                cur.execute(query)
-                return cur.fetchall()
+                cur.execute(query, data=data)
+                result = cur.fetchall()
+                if not result:
+                    return [None]
+                return result
             except Exception as e:
                 print(e.args)
                 raise e
