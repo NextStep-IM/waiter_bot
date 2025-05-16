@@ -51,3 +51,13 @@ class DBConnection:
                 print(e.args)
                 raise e
 
+def test_db():
+    #query = 'INSERT INTO users(name, password) VALUES (?, ?)'
+    #data = ('test_user_1', 'test_pass_1')
+    query = 'SELECT name, password FROM users'
+    db = DBConnection()
+    # db.execute_query(query, data)
+    print(db.read_query(query))
+
+if __name__ == '__main__':
+    test_db()
