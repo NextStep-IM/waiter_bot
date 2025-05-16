@@ -43,6 +43,7 @@ class DBConnection:
         :return:
         """
         with self.conn.cursor(prepared=True) as cur:
+            # TODO: Make a custom exception
             try:
                 cur.execute(query, data=data)
                 result = cur.fetchall()
