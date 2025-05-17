@@ -1,3 +1,4 @@
+import sys
 import mariadb
 
 
@@ -14,8 +15,7 @@ class DBConnection:
                 reconnect=True # if connection died due to timeout or other errors.
             )
         except mariadb.Error as e:
-            # TODO: Try to throw the exception outside
-            pass
+            sys.exit(1)
 
     def execute_query(self, query: str, data: tuple):
         """
