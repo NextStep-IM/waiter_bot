@@ -36,24 +36,28 @@ class DBConnection:
                 self.conn.rollback()
                 raise e
 
-    def read_query(self, query: str, data: tuple=()):
+    def read_query(self, query: str, data: tuple=()) -> List[Tuple[Any, ...]]:
         """
         Runs DQL sql query
 
-        :param query:
-        :return:
+        :param query: The SQL query
+        :type query: str
+        :param data: The values to replace the question marks (?) in the query
+        :type data: tuple
+        :return: Result of the query
+        :rtype: List[Tuple[Any, ...]]
         """
         with self.conn.cursor(prepared=True) as cur:
-            # TODO: Make a custom exception
+            # TODO: Try to find a specific exception to put in
             try:
                 cur.execute(query, data=data)
                 result = cur.fetchall()
                 if not result:
-                    return [None]
-                return result
+                    return [(None,)]
             except Exception as e:
                 print(e.args)
                 raise e
+        return result
 
 def test_db():
     #query = 'INSERT INTO users(name, password) VALUES (?, ?)'
