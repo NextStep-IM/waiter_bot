@@ -21,7 +21,7 @@ if login_btn:
     else:
         params = {'name': username_field, 'password': password_field}
         response = requests.post('http://localhost:1111/login',
-                             params=params).json()
+                             json=params).json()
         print(f'Response: {response}')
         if response['success']:
             st.switch_page('home.py')

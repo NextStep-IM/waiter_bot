@@ -27,7 +27,9 @@ def login() -> Tuple[Response, int]:
     :rtype: Tuple[Response, int]
     """
 
-    name, password = request.args.values()
+    response = request.get_json()
+    name = response['name']
+    password = response['password']
     query = 'SELECT name, password FROM users WHERE name = ?'
     params = (name,)
     try:
