@@ -1,4 +1,6 @@
 import json
+
+import mariadb
 from flask import Flask, request
 from database import DBConnection
 
@@ -21,7 +23,7 @@ def login():
     params = (name, password)
     try:
         data = db.read_query(query, data=params)[0]
-    except Exception:
+    except mariadb.Error:
         return {'error': 'Exception raised', 'status': 500}
 
     if not data:
