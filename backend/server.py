@@ -4,7 +4,7 @@ from typing import Tuple
 import mariadb
 from flask import Flask, request, Response
 from flask import jsonify
-from database import DBConnection
+from .database import DBConnection
 
 
 app = Flask(__name__)
