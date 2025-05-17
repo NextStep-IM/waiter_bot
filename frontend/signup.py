@@ -1,3 +1,4 @@
+import requests
 import streamlit as st
 
 # Sign Up
@@ -15,8 +16,14 @@ if login_btn:
     st.switch_page('login.py')
 
 if signup_btn:
-    if not username_field and not password_field:
+    if not (username_field and password_field):
         st.error('Please fill all the fields.', icon=':material/error:')
     else:
-        # Add database things here
-        pass
+        params = {'name': username_field, 'password': password_field}
+        response = requests.post('http://localhost:1111/signup',
+                                 json=params).json()
+        print(f'Response: {response}')
+        if response['success']:
+            st.switch_page('login.py')
+        else:
+            st.error(response['message'], icon=':material/error:')
