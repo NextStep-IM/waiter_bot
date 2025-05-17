@@ -22,8 +22,9 @@ class DBConnection:
         Runs DDL or DML sql query
 
         :param query: The sql query
+        :type query: str
         :param data: The values to replace the question marks (?) in the query
-        :return: Result of the sql query
+        :type data: tuple
         """
         with self.conn.cursor(prepared=True) as cur:
             self.conn.begin() # Start transaction
