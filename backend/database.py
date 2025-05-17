@@ -72,6 +72,14 @@ class DBConnection:
             return False
         return True
 
+    def signup_user(self, name: str, password: str):
+        query = 'INSERT INTO users (name, password) VALUES (?, ?)'
+        data = (name, password)
+        try:
+            self._execute_query(query, data)
+        except mariadb.Error as e:
+            raise e
+
 def test_db():
     #query = 'INSERT INTO users(name, password) VALUES (?, ?)'
     #data = ('test_user_1', 'test_pass_1')
