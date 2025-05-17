@@ -19,8 +19,8 @@ db = DBConnection()
 @app.route('/login', methods=['POST'])
 def login():
     name, password = request.args.values()
-    query = 'SELECT name, password FROM users WHERE name = ? AND password = ?'
-    params = (name, password)
+    query = 'SELECT name, password FROM users WHERE name = ?'
+    params = (name,)
     try:
         data = db.read_query(query, data=params)[0]
     except mariadb.Error:
