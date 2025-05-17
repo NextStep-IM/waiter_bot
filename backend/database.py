@@ -61,6 +61,17 @@ class DBConnection:
                 raise e
         return result
 
+    def user_exists(self, name:str) -> bool:
+        query = 'SELECT name FROM users WHERE name = ?'
+        data = (name,)
+        try:
+            result = self._read_query(query, data)[0]
+        except mariadb.Error as e:
+            raise e
+        if not result[0]:
+            return False
+        return True
+
 def test_db():
     #query = 'INSERT INTO users(name, password) VALUES (?, ?)'
     #data = ('test_user_1', 'test_pass_1')
