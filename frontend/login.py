@@ -1,5 +1,7 @@
 import streamlit as st
 import requests
+from typing import Tuple
+from flask import Response
 
 # Login
 st.markdown("<h1 style='text-align: center;'>Login</h1>", unsafe_allow_html=True)
@@ -18,14 +20,13 @@ if login_btn:
         st.error('Please fill all the fields', icon=':material/error:')
     else:
         params = {'name': username_field, 'password': password_field}
-        data = requests.post('http://localhost:1111/login',
+        response = requests.post('http://localhost:1111/login',
                              params=params).json()
-        if data['status'] == 200:
+        print(f'Response: {response}')
+        if response['success']:
             st.switch_page('home.py')
-        elif data['status'] == 401:
-            st.error('Invalid credentials', icon=':material/error:')
         else:
-            st.error('Server error', icon=':material/error:')
+            st.error(response['message'], icon=':material/error:')
 
 if signup_btn:
     st.switch_page('signup.py')
