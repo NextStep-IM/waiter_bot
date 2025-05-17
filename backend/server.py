@@ -51,7 +51,28 @@ def login() -> Tuple[Response, int]:
 # TODO: Finish this
 @app.route('/signup', methods=['POST'])
 def signup():
-    pass
+    response = request.get_json()
+    name = response['name']
+    password = response['password']
+    try:
+        if db.user_exists(name):
+            return jsonify({
+                'success': False,
+                'message': 'User already exists'
+            }), 409
+
+        db.signup_user(name, password)
+    except mariadb.Error:
+        return jsonify({
+            'success' :  False,
+            'message' : 'Database error. Failed to register user.'
+        }), 500
+
+    return jsonify({
+        'success': True,
+        'message': 'User has been signed up.'
+    }), 200
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=1111, debug=True)
