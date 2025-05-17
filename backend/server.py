@@ -26,7 +26,7 @@ def login():
     except mariadb.Error:
         return {'error': 'Exception raised', 'status': 500}
 
-    if not data:
+    if not data[0]:
         return {'auth': False, 'status': 401}
     n, p = data
     if not (n == name and p == password):
