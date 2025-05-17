@@ -31,7 +31,7 @@ class DBConnection:
             try:
                 cur.execute(query, data=data)
                 self.conn.commit()
-            except Exception as e:
+            except mariadb.Error as e:
                 print(e.args)
                 self.conn.rollback()
                 raise e
