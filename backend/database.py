@@ -47,6 +47,7 @@ class DBConnection:
         :type data: tuple
         :return: Result of the query
         :rtype: List[Tuple[Any, ...]]
+        :raises mariadb.Error: Raises exception if execute() or fetchall() could not run properly
         """
         with self.conn.cursor(prepared=True) as cur:
             # TODO: Try to find a specific exception to put in
@@ -55,7 +56,7 @@ class DBConnection:
                 result = cur.fetchall()
                 if not result:
                     return [(None,)]
-            except Exception as e:
+            except mariadb.Error as e:
                 print(e.args)
                 raise e
         return result
