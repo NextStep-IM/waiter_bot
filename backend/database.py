@@ -80,6 +80,21 @@ class DBConnection:
         except mariadb.Error as e:
             raise e
 
+    def authenticate_user(self, name, password) -> bool:
+        query = 'SELECT name, password FROM users WHERE name = ?'
+        data = (name,)
+        try:
+            result = self._read_query(query, data)[0]
+        except mariadb.Error as e:
+            raise e
+        if not result[0]:
+            return False
+        n, p = result
+        if not (n == name and p == password):
+            return False
+        return True
+
+
 def test_db():
     #query = 'INSERT INTO users(name, password) VALUES (?, ?)'
     #data = ('test_user_1', 'test_pass_1')
