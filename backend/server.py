@@ -58,5 +58,10 @@ def login() -> Tuple[Response, int]:
         'message': 'Logged in'
     }), 200
 
+# TODO: Finish this
+@app.route('/signup', methods=['POST'])
+def signup():
+    pass
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=1111, debug=True)
