@@ -18,7 +18,7 @@ class DBConnection:
         except mariadb.Error as e:
             sys.exit(1)
 
-    def execute_query(self, query: str, data: tuple):
+    def _execute_query(self, query: str, data: tuple):
         """
         Runs DDL or DML sql query
 
@@ -37,7 +37,7 @@ class DBConnection:
                 self.conn.rollback()
                 raise e
 
-    def read_query(self, query: str, data: tuple=()) -> List[Tuple[Any, ...]]:
+    def _read_query(self, query: str, data: tuple=()) -> List[Tuple[Any, ...]]:
         """
         Runs DQL sql query
 
