@@ -73,7 +73,18 @@ class Recommender:
 
 
 def main():
-    pass
+    features = ['Calories', 'FatContent', 'SaturatedFatContent', 'CholesterolContent', 'SodiumContent',
+                     'CarbohydrateContent', 'FiberContent', 'SugarContent', 'ProteinContent']
+    df = pd.read_csv('../data/cleaned_recipes.csv')
+    test_data = df[features].sample(20)
+    print(f'Test Data:\n{test_data}\n- - - - - - - - - - -')
+    rec = Recommender(df, test_data)
+    result = rec.recommend('Dessert')
+    print(result[['Name', 'RecipeCategory']])
+    print('- - - - - - - - - - -')
+    for t, r in zip(test_data.index, result.index):
+        if t == r:
+            print(f'Test Data and Recommendations are same at index: {t}')
 
 if __name__ == '__main__':
     main()
