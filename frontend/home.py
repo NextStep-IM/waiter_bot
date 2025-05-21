@@ -6,3 +6,6 @@ st.text('\n\n')
 col1, col2, col3 = st.columns([1, 1, 1])
 with col2:
     rec_btn = st.button('Recommend Me Recipes!')
+
+if rec_btn:
+    st.switch_page('recommend.py')
