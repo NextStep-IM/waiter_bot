@@ -13,3 +13,8 @@ def find_dataset_path():
         parent = parent.parent
     return parent / 'data' / 'cleaned_recipes.csv'
 
+df = load_dataframe(find_dataset_path())
+categories = list(df['RecipeCategory'].unique())
+
+selected_cat = st.selectbox('Choose a category:', ['All'] + categories)
+
