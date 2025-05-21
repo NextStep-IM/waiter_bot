@@ -1,5 +1,8 @@
 import joblib
 import pandas as pd
+from sklearn.neighbors import NearestNeighbors
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler, FunctionTransformer
 
 
 # PIPELINE = joblib.load('recommend_recipes_pipeline.pkl')
@@ -14,6 +17,60 @@ import pandas as pd
 #     df_user_data = pd.DataFrame(user_data)
 #     indices = PIPELINE.transform(df_user_data)[0] # Find similar recipes
 #     return DATASET.iloc[indices]
+
+class Recommender:
+
+    def __init__(self, df: pd.DataFrame, user_data: pd.DataFrame):
+        self.features = ['Calories', 'FatContent', 'SaturatedFatContent', 'CholesterolContent', 'SodiumContent', 'CarbohydrateContent', 'FiberContent', 'SugarContent', 'ProteinContent']
+        self.df = df
+        self.user_data = user_data
+
+    def _scaling(self, extracted_data: pd.DataFrame):
+        scaler = StandardScaler()
+        prep_data = scaler.fit_transform(extracted_data[self.features])
+        return prep_data,scaler
+
+
+    def _nn_predictor(self, prep_data):
+        neigh = NearestNeighbors(metric='cosine', algorithm='brute')
+        neigh.fit(prep_data)
+        return neigh
+
+    def _build_pipeline(self, neigh, scaler, params):
+        transformer = FunctionTransformer(neigh.kneighbors, kw_args=params)
+        pipeline = Pipeline(
+            [
+                ('std_scaler',scaler),
+                ('NN',transformer)
+            ]
+        )
+        return pipeline
+
+    def _extract_data(self, df, category):
+        extracted_data = df.copy()
+        # if not ingredient_filter:
+        #     for ingredient in ingredient_filter:
+        #         extracted_data = extracted_data[extracted_data['RecipeIngredientParts'].str.contains(ingredient, regex=False)]
+
+        if category:
+            extracted_data = extracted_data[extracted_data['RecipeCategory'] == category]
+            print(f'- - - - - - - - - - -\n{extracted_data['RecipeCategory'].sample(5)}\n- - - - - - - - - - ')
+        return extracted_data
+
+    def _apply_pipeline(self, pipeline, user_data, extracted_data):
+        return extracted_data.iloc[pipeline.transform(user_data)[0]]
+
+    def recommend(self, category: str=None, params: dict=None):
+        if params is None:
+            params = {'return_distance': False}
+
+        extracted_data = self._extract_data(self.df, category)
+        prep_data,scaler = self._scaling(extracted_data)
+        neigh = self._nn_predictor(prep_data)
+        pipeline = self._build_pipeline(neigh,scaler,params)
+
+        return self._apply_pipeline(pipeline, self.user_data, extracted_data)
+
 
 def main():
     pass
