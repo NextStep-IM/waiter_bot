@@ -6,7 +6,7 @@ pages = {
         st.Page('signup.py', title='Sign Up'),
     ],
     'home': [st.Page('home.py', title='Home')],
-    'recommend': [st.Page('recommend.py', title='Recommend')]
+    'recommend_recipes': [st.Page('recommend.py', title='Recommend')]
 }
 
 pg = st.navigation(pages, position='hidden')
