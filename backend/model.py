@@ -7,7 +7,7 @@ from sklearn.preprocessing import StandardScaler, FunctionTransformer
 
 # PIPELINE = joblib.load('recommend_recipes_pipeline.pkl')
 # DATASET: pd.DataFrame = pd.read_csv('../data/cleaned_recipes.csv')
-# def recommend(user_data: dict) -> pd.DataFrame:
+# def recommend_recipes(user_data: dict) -> pd.DataFrame:
 #     """
 #     Recommend recipes according to user's preferences.
 #
@@ -28,7 +28,7 @@ class Recommender:
     def _scaling(self, extracted_data: pd.DataFrame):
         scaler = StandardScaler()
         prep_data = scaler.fit_transform(extracted_data[self.features])
-        return prep_data,scaler
+        return prep_data, scaler
 
 
     def _nn_predictor(self, prep_data):
@@ -60,7 +60,7 @@ class Recommender:
     def _apply_pipeline(self, pipeline, user_data, extracted_data):
         return extracted_data.iloc[pipeline.transform(user_data)[0]]
 
-    def recommend(self, category: str=None, params: dict=None):
+    def recommend_recipes(self, category: str=None, params: dict=None):
         if params is None:
             params = {'return_distance': False}
 
@@ -79,7 +79,7 @@ def main():
     test_data = df[features].sample(20)
     print(f'Test Data:\n{test_data}\n- - - - - - - - - - -')
     rec = Recommender(df, test_data)
-    result = rec.recommend('Dessert')
+    result = rec.recommend_recipes('Dessert')
     print(result[['Name', 'RecipeCategory']])
     print('- - - - - - - - - - -')
     for t, r in zip(test_data.index, result.index):
