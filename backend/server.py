@@ -73,6 +73,9 @@ def signup():
         'message': 'User has been signed up.'
     }), 200
 
+@app.route('/recommend_recipes')
+def recommend():
+    pass
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=1111, debug=True)
