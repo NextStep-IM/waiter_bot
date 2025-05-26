@@ -80,6 +80,15 @@ class DBConnection:
             raise e
 
     def authenticate_user(self, name, password) -> bool:
+        """
+        Authenticates user
+
+        :param name: Username
+        :param password: Password
+        :return: True if user is cleared otherwise False.
+        :rtype: bool
+        :raises mariadb.Error: Raises exception if an exception is caught when executing query
+        """
         query = 'SELECT name, password FROM users WHERE name = ?'
         data = (name,)
         try:
