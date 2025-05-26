@@ -73,7 +73,7 @@ def signup():
         'message': 'User has been signed up.'
     }), 200
 
-@app.route('/recommend_recipes')
+@app.route('/recommend')
 def recommend():
     pass
 
