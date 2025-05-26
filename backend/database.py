@@ -102,11 +102,24 @@ class DBConnection:
             return False
         return True
 
+    def get_user_history(self, name) -> List[Tuple[Any, ...]]:
+        """
+        Retrieve all the contents of the recipes the user has liked before.
 
-def test_db():
-    #query = 'INSERT INTO users(name, password) VALUES (?, ?)'
-    #data = ('test_user_1', 'test_pass_1')
-    query = 'SELECT name, password FROM users'
+        :param name: Username
+        :return: Recipes' contents
+        :rtype: List[Tuple[Any, ...]]
+        """
+        query = ''
+        with open('queries/get_user_history.sql') as q:
+            query = q.read()
+        data = (name,)
+        try:
+            result = self._read_query(query, data)
+        except mariadb.Error as e:
+            raise e
+        return result
+
     db = DBConnection()
     # db.execute_query(query, data)
     print(db.read_query(query))
