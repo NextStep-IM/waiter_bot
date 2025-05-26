@@ -120,9 +120,9 @@ class DBConnection:
             raise e
         return result
 
+def main():
     db = DBConnection()
-    # db.execute_query(query, data)
-    print(db.read_query(query))
+    print(db.get_user_history('test_user_1'))
 
 if __name__ == '__main__':
-    test_db()
+    main()
