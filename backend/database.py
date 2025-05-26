@@ -50,7 +50,6 @@ class DBConnection:
         :raises mariadb.Error: Raises exception if execute() or fetchall() could not run properly
         """
         with self.conn.cursor(prepared=True) as cur:
-            # TODO: Try to find a specific exception to put in
             try:
                 cur.execute(query, data=data)
                 result = cur.fetchall()
