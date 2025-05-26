@@ -18,3 +18,12 @@ categories = list(df['RecipeCategory'].unique())
 
 selected_cat = st.selectbox('Choose a category:', ['All'] + categories)
 
+#rec = Recommender(df, df.sample(20))
+
+if st.button('Apply'):
+    if selected_cat != 'All':
+        # recipes = rec.recommend_recipes(selected_cat)
+        pass
+    else:
+        #recipes = rec.recommend_recipes()
+        pass
