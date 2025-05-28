@@ -20,16 +20,8 @@ def find_absolute_path(filename: str):
         parent = parent.parent
     return parent / 'data' / filename
 
-df = load_dataframe(find_dataset_path())
-categories = list(df['RecipeCategory'].unique())
-
-selected_cat = st.selectbox('Choose a category:', ['All'] + categories)
 
 
-if st.button('Apply'):
-    if selected_cat != 'All':
-        # recipes = rec.recommend_recipes(selected_cat)
+
         pass
     else:
-        #recipes = rec.recommend_recipes()
-        pass
