@@ -1,3 +1,4 @@
+import requests
 import streamlit as st
 import pandas as pd
 from pathlib import Path
@@ -72,5 +73,9 @@ def display_recipes(df: pd.DataFrame):
                 st.markdown(f"<h5 style='text-align: center'>{row['Name']}</h5>", unsafe_allow_html=True)
                 if st.button(f"View Details", key=f"btn_{j}"):
                     pass
+
+recipes_df = load_dataframe(find_absolute_path('cleaned_recipes.csv'))
+
+response = st.session_state.http_session.get('http://localhost:1111/user')
 
     else:
