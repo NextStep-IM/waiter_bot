@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 from pathlib import Path
-from backend.model import Recommender
 
 @st.cache_data
 def load_dataframe(path) -> pd.DataFrame:
@@ -26,7 +25,6 @@ categories = list(df['RecipeCategory'].unique())
 
 selected_cat = st.selectbox('Choose a category:', ['All'] + categories)
 
-#rec = Recommender(df, df.sample(20))
 
 if st.button('Apply'):
     if selected_cat != 'All':
