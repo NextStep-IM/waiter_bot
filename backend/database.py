@@ -134,7 +134,7 @@ class DBConnection:
 
 def main():
     db = DBConnection()
-    print(db.get_user_history('test_user_1'))
+    print(db.is_first_time('test_user_1'))
 
 if __name__ == '__main__':
     main()
