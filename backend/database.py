@@ -120,6 +120,18 @@ class DBConnection:
             raise e
         return result
 
+    def is_first_time(self, username: str) -> bool:
+        query = 'SELECT * FROM user_recipes WHERE user_id = (SELECT id FROM users WHERE name = ?)'
+        data = (username,)
+        try:
+            result = self._read_query(query, data)[0]
+        except mariadb.Error as e:
+            raise e
+        if not result[0]:
+            return True
+        return False
+
+
 def main():
     db = DBConnection()
     print(db.get_user_history('test_user_1'))
