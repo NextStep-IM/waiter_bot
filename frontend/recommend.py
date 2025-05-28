@@ -53,4 +53,24 @@ def recommend_with_user_history():
         #     pass
         pass
 
+# TODO: Add page or dialog to show recipe's contents
+def display_recipes(df: pd.DataFrame):
+    # Index of the received dataframe may have random index numbers.
+    # This will set the index from 0 to [number of rows].
+    df.reset_index(drop=True, inplace=True)
+
+    no_image_path = 'assets/no_image.jpg'
+    for i in range(0, len(df), 3):
+        cols = st.columns(3)
+        for j, row in df.iloc[i:i + 3].iterrows(): # i = index, row = Series
+            with cols[j % 3]:
+                try:
+                    st.image(row['Images'], use_container_width=True)
+                except Exception as err:
+                    st.image(no_image_path, use_container_width=True)
+
+                st.markdown(f"<h5 style='text-align: center'>{row['Name']}</h5>", unsafe_allow_html=True)
+                if st.button(f"View Details", key=f"btn_{j}"):
+                    pass
+
     else:
