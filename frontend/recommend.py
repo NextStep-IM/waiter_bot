@@ -2,6 +2,10 @@ import streamlit as st
 import pandas as pd
 from pathlib import Path
 
+RECIPE_DATA = ['Name', 'RecipeId', 'RecipeInstructions', 'RecipeIngredientParts', 'RecipeIngredientQuantities', 'RecipeCategory',
+         'Images', 'Calories', 'FatContent', 'SaturatedFatContent', 'CholesterolContent', 'SodiumContent',
+         'CarbohydrateContent', 'FiberContent', 'SugarContent', 'ProteinContent']
+
 @st.cache_data
 def load_dataframe(path) -> pd.DataFrame:
     return pd.read_csv(path)
@@ -20,7 +24,20 @@ def find_absolute_path(filename: str):
         parent = parent.parent
     return parent / 'data' / filename
 
+@st.cache_data
+def recommend_popular_recipes(recipes_df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Recommend highest-rated recipes from each category. This function
+    is for when the user's logging in for the first time and there is no
+    data for the model (NearestNeighbors) to use.
 
+    :param recipes_df: The cleaned recipes dataset
+    :return: Recipes
+    """
+    reviews_df = load_dataframe(find_absolute_path('reviews.csv'))
+    merged_df = recipes_df.merge(reviews_df, on='RecipeId', how='outer', copy=True)
+    indices = merged_df.groupby('RecipeCategory')['Rating'].idxmax()
+    return merged_df.iloc[indices][RECIPE_DATA]
 
 
         pass
