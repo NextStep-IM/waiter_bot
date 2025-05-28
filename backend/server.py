@@ -23,7 +23,7 @@ def login() -> Tuple[Response, int]:
     """
     Login to the website
 
-    :return: A tuple containing the response json and status code
+    :return: The response in json and status code
     :rtype: Tuple[Response, int]
     """
 
@@ -51,7 +51,13 @@ def login() -> Tuple[Response, int]:
 
 # TODO: Finish this
 @app.route('/signup', methods=['POST'])
-def signup():
+def signup() -> Tuple[Response, int]:
+    """
+    Register the user
+
+    :return: The response in json and status code
+    :rtype: Tuple[Response, int]
+    """
     response = request.get_json()
     name = response['name']
     password = response['password']
