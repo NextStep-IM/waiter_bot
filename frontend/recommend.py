@@ -78,4 +78,15 @@ recipes_df = load_dataframe(find_absolute_path('cleaned_recipes.csv'))
 
 response = st.session_state.http_session.get('http://localhost:1111/user')
 
+if response.status_code == 200:
+    json_data = response.json()
+    print(json_data)
+    if json_data['message']['first_time']:
+        st.markdown(f"<h1 style='text-align: center;'>Since this is your first time, I will recommend you some popular recipes!</h1>", unsafe_allow_html=True)
+        display_recipes(recommend_popular_recipes(recipes_df))
     else:
+        # TODO: Use  current user's data to get their history
+        # display_recipes(recommend_with_user_history())
+        pass
+else:
+    print('Error in response from /user')
