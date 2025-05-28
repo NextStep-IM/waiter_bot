@@ -3,6 +3,9 @@ import requests
 from typing import Tuple
 from flask import Response
 
+if "http_session" not in st.session_state:
+    st.session_state.http_session = requests.Session()
+
 # Login
 st.markdown("<h1 style='text-align: center;'>Login</h1>", unsafe_allow_html=True)
 st.write('- - -')
@@ -20,7 +23,7 @@ if login_btn:
         st.error('Please fill all the fields', icon=':material/error:')
     else:
         params = {'name': username_field, 'password': password_field}
-        response = requests.post('http://localhost:1111/login',
+        response = st.session_state.http_session.post('http://localhost:1111/login',
                              json=params).json()
         print(f'Response: {response}')
         if response['success']:
