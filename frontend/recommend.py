@@ -39,6 +39,18 @@ def recommend_popular_recipes(recipes_df: pd.DataFrame) -> pd.DataFrame:
     indices = merged_df.groupby('RecipeCategory')['Rating'].idxmax()
     return merged_df.iloc[indices][RECIPE_DATA]
 
+# TODO: Finish this
+def recommend_with_user_history():
+    categories = list(recipes_df['RecipeCategory'].unique())
+    selected_cat = st.selectbox('Choose a category:', ['All'] + categories)
 
+    if st.button('Apply'):
+        # if selected_cat != 'All':
+        #     # recipes = rec.recommend_recipes(selected_cat)
+        #     pass
+        # else:
+        #     #recipes = rec.recommend_recipes()
+        #     pass
         pass
+
     else:
