@@ -1,9 +1,10 @@
 import json
 from typing import Tuple
-
 import mariadb
+import pandas as pd
 from flask import Flask, request, Response, session
 from flask import jsonify
+
 from .database import DBConnection
 
 
@@ -104,9 +105,27 @@ def get_user():
     }, 401
 
 
-@app.route('/recommend')
-def recommend():
-    pass
+@app.route('/save_recipe', methods=['POST'])
+def save_recipe():
+    response = request.get_json()
+    #recipes = pd.DataFrame(response)
+    #print(f'-----------------------\n/save_recipe:\n{type(response)}\n{response}----------------------------------')
+    # for recipe in response:
+    #     recipes = pd.DataFrame(recipe)
+    try:
+        for recipe in response:
+            #print(recipe)
+            db.save_recipe_to_db(recipe, session['username'])
+    except mariadb.Error as er:
+        return {
+            'success': False,
+            'message': er.args
+        }, 500
+
+    return {
+        'success': True,
+        'message': 'Recipe saved to database.'
+    }, 200
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=1111, debug=True)
