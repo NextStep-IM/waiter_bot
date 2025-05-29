@@ -86,11 +86,9 @@ def signup() -> Tuple[Response, int]:
 def get_user():
 
     if 'username' in session:
-        print(f'/get_user: Username: {session['username']} saved in session')
 
         # TODO: This is a workaround. Use Flask-Login
         first_time_login: bool = db.is_first_time(session['username'])
-        print(f'This is get_user(). First time login is {first_time_login}')
         return {
             'success': True,
             'message': {
