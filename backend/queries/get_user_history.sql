@@ -1,4 +1,4 @@
-SELECT Calories, FatContent, SaturatedFatContent,
+SELECT id, Calories, FatContent, SaturatedFatContent,
 CholesterolContent, SodiumContent, CarbohydrateContent,
 FiberContent, SugarContent, ProteinContent
 FROM recipes
