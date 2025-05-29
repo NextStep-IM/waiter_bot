@@ -133,6 +133,14 @@ class DBConnection:
             return True
         return False
 
+    def get_user_id(self, username: str):
+        query = 'SELECT id FROM users WHERE name = ?'
+        data = (username, )
+        try:
+            result = self._read_query(query, data)[0]
+        except mariadb.Error as e:
+            raise e
+        return result[0]
 
 def main():
     db = DBConnection()
