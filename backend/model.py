@@ -9,7 +9,7 @@ class Recommender:
     def __init__(self, df: pd.DataFrame, user_data: pd.DataFrame):
         self.features = ['Calories', 'FatContent', 'SaturatedFatContent', 'CholesterolContent', 'SodiumContent', 'CarbohydrateContent', 'FiberContent', 'SugarContent', 'ProteinContent']
         self.df = df
-        self.user_data = user_data[self.features]
+        self.user_data = user_data
 
     def _scaling(self, extracted_data: pd.DataFrame):
         scaler = StandardScaler()
