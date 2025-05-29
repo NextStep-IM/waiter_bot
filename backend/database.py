@@ -1,8 +1,10 @@
 import sys
 from typing import List, Tuple, Any
 import mariadb
+import os
 
 
+BASE = os.path.dirname(os.path.abspath(__file__))
 class DBConnection:
     def __init__(self):
         try:
