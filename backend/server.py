@@ -6,7 +6,9 @@ from flask import Flask, request, Response, session
 from flask import jsonify
 
 from .database import DBConnection
+from .model import Recommender
 
+RECIPES = pd.read_csv('/opt/waiter_bot/data/cleaned_recipes.csv')
 
 app = Flask(__name__)
 app.secret_key = b'a524ef4d9e3a62d5bdfcfbf49a213e02070a50dd6fbcfe8134d5f9961d31620c'
