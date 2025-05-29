@@ -142,6 +142,26 @@ class DBConnection:
             raise e
         return result[0]
 
+    def save_recipe_to_db(self, recipe: dict, username: str):
+        query = ''
+        with open(os.path.join(BASE, 'queries', 'save_recipe.sql')) as q:
+            query = q.read()
+        data = (recipe['RecipeId'], recipe['Name'], recipe['Calories'], recipe['FatContent'], recipe['SaturatedFatContent'],
+                recipe['CholesterolContent'], recipe['SodiumContent'], recipe['CarbohydrateContent'],
+                recipe['FiberContent'], recipe['SugarContent'], recipe['ProteinContent'], recipe['RecipeId'])
+        try:
+            self._execute_query(query, data)
+        except mariadb.Error as e:
+            raise e
+
+        query = 'INSERT IGNORE INTO user_recipes (user_id, recipe_id) VALUES (?, ?)'
+        data = (self.get_user_id(username), recipe['RecipeId'])
+        try:
+            self._execute_query(query, data)
+        except mariadb.Error as e:
+            raise e
+        #print(f'Saved in database. Recipe:\n{recipe}')
+
 def main():
     db = DBConnection()
     print(db.is_first_time('test_user_1'))
