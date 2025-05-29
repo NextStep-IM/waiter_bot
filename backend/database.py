@@ -104,18 +104,18 @@ class DBConnection:
             return False
         return True
 
-    def get_user_history(self, name) -> List[Tuple[Any, ...]]:
+    def get_user_history(self, username) -> List[Tuple[Any, ...]]:
         """
         Retrieve all the contents of the recipes the user has liked before.
 
-        :param name: Username
+        :param username: Username
         :return: Recipes' contents
         :rtype: List[Tuple[Any, ...]]
         """
         query = ''
-        with open('queries/get_user_history.sql') as q:
+        with open(os.path.join(BASE, 'queries', 'get_user_history.sql')) as q:
             query = q.read()
-        data = (name,)
+        data = (username,)
         try:
             result = self._read_query(query, data)
         except mariadb.Error as e:
