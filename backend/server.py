@@ -127,5 +127,33 @@ def save_recipe():
         'message': 'Recipe saved to database.'
     }, 200
 
+@app.route('/recommend/<category>', methods=['POST'])
+def recommend(category: str):
+    try:
+        user_history = db.get_user_history(session['username'])
+    except mariadb.Error as er:
+        return {
+            'success': False,
+            'message': er.args
+        }, 500
+
+    columns = ['RecipeId', 'Calories', 'FatContent', 'SaturatedFatContent', 'CholesterolContent', 'SodiumContent', 'CarbohydrateContent', 'FiberContent', 'SugarContent', 'ProteinContent']
+    # indices = []
+    # for row in user_history:
+    #     indices.append(row[0])
+    user_history = pd.DataFrame(user_history, columns=columns)
+    user_history.set_index('RecipeId', inplace=True)
+    print(f'------------\nUser History:\n{user_history}\n--------------')
+    rec = Recommender(RECIPES, user_history)
+    if category != 'All':
+        result = rec.recommend_recipes(category)
+    else:
+        result = rec.recommend_recipes()
+    print(f'--------------------\nResult:\n{result}\n----------------------')
+    return {
+        'success': True,
+        'message': result.to_dict()
+    }, 200
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=1111, debug=True)
